@@ -67,3 +67,44 @@ void Efecto2bis(unsigned int cont){
     return;
 
 }
+
+
+void Efecto0()
+{ /*Cambiar el estado de los LEDs*/
+    LATDbits.LATD0 =! LATDbits.LATD0;
+    LATDbits.LATD1 =! LATDbits.LATD1;      
+    LATDbits.LATD2 =! LATDbits.LATD2;
+    LATDbits.LATD3 =! LATDbits.LATD3;
+    
+    return;
+}
+
+//LA menor prioridad debe ser la del CPU
+void ConfigINT(){
+    INTCON1bits.NSTDIS = 1;
+    IPC4bits.INT1IP = 3; //DEfinimos la prioridad es ISR
+    IFS1bits.INT1IF = 0; //limpia el flag
+    IEC1bits.INT1IE = 1; //Habilita la mascara
+    
+    //Configuracion INT4 para temporizacion variable
+    IPC9bits.INT4IP = 2; //DEfinimos la prioridad es ISR
+    IFS2bits.INT4IF = 0; //limpia el flag
+    IEC2bits.INT4IE = 1; //Habilita la mascara
+    
+    SET_CPU_IPL(1);
+    
+    return;
+}
+
+void PR1TMR1(){
+    PR1 = (FCY/256)/2;  
+    return;
+}
+
+void CambioPR1(unsigned int cont){
+    float tf = (FCY/256)/2;
+    PR1 = tf*cont;
+    return;
+    
+    
+}

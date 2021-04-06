@@ -24,10 +24,11 @@
 // Global variables
 //---------------------------------------------------------------------------
 // En este espacio pueden declararse las variables globales o las constantes.
-// Ejemplo:
-// unsigned int MiValor = 0;
 unsigned int caso1 = 0;
 unsigned int caso2 = 0;
+unsigned int casos = 0;
+unsigned int efecto = 0;
+unsigned int pulso = 1;
 
 //---------------------------------------------------------------------------
 // ISR routine
@@ -40,24 +41,52 @@ unsigned int caso2 = 0;
 
 void __attribute__((interrupt, auto_psv))_T1Interrupt(void)
 {
-    if(PORTAbits.RA12==0){ //sw1=RA12
-        caso2++;
-        if(caso2==8){
-            caso2=0;
+      IFS0bits.T1IF = 0;
+      casos++;
+      if(casos == 8){
+            casos=0;
         }
-        Efecto2(caso2);
-    }
-    if(PORTAbits.RA12==1){ //sw1=RA12
-        caso1++;
-        if(caso1==4){
-            caso1=0;
-        }
-        Efecto1(caso1);
-    }
-    IFS0bits.T1IF = 0;
+      switch(efecto){
+          case 0:
+              Efecto0();
+              break;
+          case 1:
+              Efecto1(casos);
+              break;
+          case 2:
+              Efecto2(casos);
+              break;
+          default:
+              Efecto0();
+              break;
+      }
+      
+      CambioPR1(pulso);
+ 
 }
 
+//Interrupcion SW1 -> CAMBIA EFECTO
+void __attribute__((interrupt, auto_psv))_INT1Interrupt(void){
+    IFS1bits.INT1IF = 0;
+    efecto++;
+    if (efecto == 3){
+        efecto = 0;  //RESET de efectos
+        casos = 0; //RESET de casos
+        LATD = 0xFFFF; //APAGO LOS LEDS 
+    }//Cierrp if     
 
+}
+
+//Interrupcion SW4 -> Cambia temporizacion
+void __attribute__((interrupt, auto_psv))_INT4Interrupt(void){
+   
+    IFS2bits.INT4IF = 0;
+    pulso++;
+    if (pulso == 5){
+        pulso = 1;  //RESET de efectos
+    }//Cierrp if 
+ 
+}
 //---------------------------------------------------------------------------
 // Main routine
 //---------------------------------------------------------------------------
@@ -72,8 +101,8 @@ int main (void)
     //primer metodo (funciones propias)
     //T1CON = 0;
     //TMR1 = 0;
-    PR1 = (FCY/256)/2;
-    //T1CON = 0x8030;
+    PR1TMR1;//Temporizar a 0.5 s 
+    //T1CON = 0x8030
     
     
     //segundo metodo (registros)
@@ -91,89 +120,15 @@ int main (void)
     WriteTimer23(0);
     OpenTimer23(T2_ON & T2_IDLE_STOP & T2_GATE_OFF & T2_PS_1_1 & T2_32BIT_MODE_ON & T2_SOURCE_INT,PR);
     */
+
     
-    /*estas variables se comentan para declararlas arriba
-    para el uso de interrupcion
-    */
-    //unsigned int caso1 = 0;
-    //unsigned int caso2 = 0;
-    unsigned int desplaza;
-    
+     ConfigINT();
+     CambioPR1(pulso);
     while (1)   // bucle infinito
     {
-       // __delay_ms(500);
-        
-        //primer dia
-        /*LATDbits.LATD0=!LATDbits.LATD0;}
-        
-        if(PORTAbits.RA15==0){  //sw4
-            LATDbits.LATD3=0; //led4
-            LATDbits.LATD2=1; //led3
-        }
-        
-        if(PORTAbits.RA14==0){  //sw3
-            LATDbits.LATD3=1; //led4
-            LATDbits.LATD2=0; //led3
-        }
-        */
-        
-        //EFECTO1
-       /* if(IFS0bits.T1IF==1){
-            IFS0bits.T1IF = 0;
-            caso1++;
-            if(caso1==4){
-                caso1=0;
-            }
-            Efecto1(caso1);
-          }
-        */
-        
-        //EFECTO2
-        /*if(IFS0bits.T1IF==1){
-            IFS0bits.T1IF = 0;
-            caso2++;
-            if(caso2==8){
-                caso2=0;
-            }
-            Efecto2(caso2);
-        }
-        */
-        
-        //EFECTO2bis
-        /*if(IFS0bits.T1IF==1){
-            IFS0bits.T1IF = 0;
-            if(PORTDbits.RD3==0){
-                desplaza = 1;
-            }
-            if(PORTDbits.RD0==1){
-                desplaza = 0;
-            }
-            Efecto2bis(desplaza);
-        }
-        */
-        
-        //EFECTO1 EFECTO2 segun SW1
-        /*if(IFS0bits.T3IF==1){ //cambio a T3IF en vez de T1IF para cambiar el timer
-            IFS0bits.T3IF = 0;
-            if(PORTAbits.RA12==0){ //sw1=RA12
-                caso2++;
-                if(caso2==8){
-                    caso2=0;
-                }
-                Efecto2(caso2);
-            }
-            if(PORTAbits.RA12==1){ //sw1=RA12
-                caso1++;
-                if(caso1==4){
-                    caso1=0;
-                }
-                Efecto1(caso1);
-            }
-        }
-        */
         
     }
-    
+   
     return 0;
     
 }// Main

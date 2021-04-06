@@ -1,4 +1,4 @@
-build/default/debug/Main.o:  \
+build/default/production/Main.o:  \
 Main.c  \
 Config.h  \
 Main.h  \

@@ -16,6 +16,10 @@ void InitIO(void);
 void Efecto1(unsigned int cont);
 void Efecto2(unsigned int cont);
 void Efecto2bis(unsigned int cont);
+void ConfigINT();
+void Efecto0();
+void PR1TMR1();
+void CambioPR1(unsigned int cont);
 // Añadir tantos prototipos como sea necesario.
 
 #ifdef	__cplusplus
