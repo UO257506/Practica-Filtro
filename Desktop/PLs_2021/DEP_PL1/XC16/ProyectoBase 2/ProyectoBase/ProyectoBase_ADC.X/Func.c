@@ -43,7 +43,7 @@ void InitADC()
     ADCON1bits.ADON = 0;        // Initially, stopped.
     ADCON1bits.ADSIDL = 0;      // No IDLE
     ADCON1bits.FORM = 0b00;     // Output format = unsigned integer
-    ADCON1bits.SSRC = 0b010;    // Source for triggering conversion = auto (111) con 010 disparo con TMR3
+    ADCON1bits.SSRC = 0b111;    // Source for triggering conversion = auto (111) con 010 disparo con TMR3
     ADCON1bits.ASAM = 1;        // Sampling after conversion ends
 
     // ADCON2 CONFIGURATION
@@ -78,10 +78,16 @@ void ConfigInt()
 {
     // Configuring the interrupts
     INTCON1bits.NSTDIS = 1;         // Disable nesting interrputs 
-    
+    /*
     IFS0bits.ADIF = 0;              // Clear ADC flag
     IEC0bits.ADIE = 1;              // Enable ADC mask
     IPC2bits.ADIP = 4;              // ADC priority level
+     */ //Configuracion interrupcion TMR3
+    
+    IFS0bits.ADIF = 0;              // Clear ADC flag
+    IEC0bits.ADIE = 1;              // Enable ADC mask
+    IPC1bits.IC2IP = 4;              // ADC priority level
+    
     
     SET_CPU_IPL(3);                 // Set CPU priority level to a value below the lowest interrupt
     return;   
