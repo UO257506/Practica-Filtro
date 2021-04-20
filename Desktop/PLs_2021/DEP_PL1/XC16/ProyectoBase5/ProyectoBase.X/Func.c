@@ -16,7 +16,7 @@
 // Parámetros de salida: ninguno (void).
 void InitIO()
 {
-	TRISB = 0xFFFF;     // Initialize AN6 as input                
+	TRISB = 0xFFFF;     // Initialize PUERTO B as input                
     TRISD = 0xFFF0;     // LED outputs
     LATD = 0xFFF0;      // LED on
     return;
@@ -37,9 +37,19 @@ void InitTMR3()
 {   
     //Initialize Timer3 for 10ms period
     T3CON = 0;                    // Turn off Timer3 by clearing control register
-	TMR3 = 0;                     // Start Timer1 at zero
-	PR3 = (FCY/256)*0.01;         // Set period register value for 10 ms (100 Hz)
+	TMR3 = 0;                     // Start Timer3 at zero
+	PR3 = (FCY/256)*0.001;         // Set period register value for 1ms (100 Hz)
     T3CON = 0x0030;               // Configure Timer3 (timer off, continue in IDLE, not gated, 1:256 prescaler, internal clock)    
+    return;
+}
+
+void InitTMR1()
+{   
+    //Initialize Timer3 for 10ms period
+    T1CON = 0;                    // Turn off Timer1 by clearing control register
+	TMR1 = 0;                     // Start Timer1 at zero
+	PR1 = (FCY/256)*0.5;         // Set period register value for 500 ms (100 Hz)
+    T1CON = 0x0030;               // Configure Timer1 (timer off, continue in IDLE, not gated, 1:256 prescaler, internal clock)    
     return;
 }
 
@@ -57,7 +67,7 @@ void InitADC()
 
     // ADCON2 CONFIGURATION
     ADCON2bits.VCFG = 0b000;    // Vref+ = VDD, Vref- = VSS.
-    ADCON2bits.SMPI = 0b1011;   // Interrupts after 12 conversion
+    ADCON2bits.SMPI = 0b1110;   // Interrupts after 12 conversion
     ADCON2bits.BUFM = 0;        // 16 words
     ADCON2bits.CSCNA = 1;
     ADCON2bits.ALTS = 0;
@@ -70,11 +80,11 @@ void InitADC()
     
     // ADCPCFG
     ADPCFG = 0xFFFF;	
-    ADPCFGbits.PCFG6 = 0;       // AN6 as analog input
+    ADPCFGbits.PCFG8 = 0;       // AN as analog input
     
     // ADCSSL
     ADCSSL = 0x0000;
-    ADCSSLbits.CSSL6 = 1;       // AN6 conversion
+    ADCSSLbits.CSSL8 = 1;       //  habilitar AN8 conversion
 
     ADCON1bits.ADON = 1;        // turn ADC ON
     return;
@@ -88,9 +98,13 @@ void ConfigInt()
     // Configuring the interrupts
     INTCON1bits.NSTDIS = 1;         // Disable nesting interrputs 
     
-    IFS0bits.ADIF = 0;              // Clear ADC flag
-    IEC0bits.ADIE = 1;              // Enable ADC mask
-    IPC2bits.ADIP = 4;              // ADC priority level
+    IFS0bits.T1IF = 0;              // Clear ADC flag de TMR1
+    IEC0bits.T1IE = 1;              // Enable ADC mask de TMR1
+    IPC0bits.T1IP = 4;              // ADC priority level de TMR1
+    
+    IFS0bits.ADIF = 0;              // Clear ADC flag 
+    IEC0bits.ADIE = 1;              // Enable ADC mask 
+    IPC2bits.ADIP = 5;              // ADC priority level 
     
     SET_CPU_IPL(3);                 // Set CPU priority level to a value below the lowest interrupt
     return;   
@@ -120,4 +134,37 @@ void MostrarNombre(void)
         LCD_Display_Byte(WRITE_CHAR);
         LCD_Display_Byte(valor[TxIndex++]);
     }
+}
+
+
+void PrintTemperatura(float t){
+    unsigned int tamanio=40; 
+    char temp[tamanio];
+    
+    sprintf(temp,"La temperatura es de %.2f \223C ",t);
+    
+    unsigned char TxIndex=0; 
+    //Temperatura leida
+    while (temp[TxIndex])
+    {
+        LCD_Display_Byte(WRITE_CHAR);
+        LCD_Display_Byte(temp[TxIndex++]);
+    }
+
+}
+
+void PrintPotencia(float pot){
+    unsigned int tamanio=50; 
+    char potencia[tamanio];
+    
+    sprintf(potencia,"Valor del potenciometro es %.2f V ",pot);
+    
+    unsigned char TxIndex=0; 
+    //Temperatura leida
+    while (potencia[TxIndex])
+    {
+        LCD_Display_Byte(WRITE_CHAR);
+        LCD_Display_Byte(potencia[TxIndex++]);
+    }
+
 }

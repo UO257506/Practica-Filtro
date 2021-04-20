@@ -14,10 +14,13 @@
 // EJEMPLO:
 void InitIO(void);
 void InitTMR3(void);
+void InitTMR1();
 void ConfigInt(void);
 void InitADC(void);
 void InitLCD(void);
 void MostrarNombre(void);
+void PrintTemperatura(float );
+void PrintPotencia(float);
 // Añadir tantos prototipos como sea necesario.
 
 #ifdef	__cplusplus
