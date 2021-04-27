@@ -23,7 +23,7 @@ clear all
 %devuelve una estructura en la que se incluyen los coeficientes
 %calculados. Se encuentran en una variable llamada "num" en el campo
 %"numerator"
-aux=pasobanda
+aux=rechazobanda
 
 %Se calcula el número de coeficientes, que ha de ser (forder+1)
 num_coef=length(aux.numerator);

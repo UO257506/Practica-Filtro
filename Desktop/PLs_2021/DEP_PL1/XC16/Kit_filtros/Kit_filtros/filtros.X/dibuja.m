@@ -5,7 +5,7 @@ fs = 10e3; %Frecuencia de muestreo
 Ts = 1/fs; %Período de muestreo
 
 tiempo = linspace(0,N*Ts,N); %Eje de tiempo
-entrada = entrada'; %Al importar la columna con los datos de la señal de entrada, el vector lo llamo "entrada"
+entrada = entradaRB'; %Al importar la columna con los datos de la señal de entrada, el vector lo llamo "entrada"
 maximo = max(entrada);
 entrada_normalizada = entrada./maximo;
 %%% REPRESENTACIÓN TEMPORAL DE LA SEÑAL DE ENTRADA -> SUMA DE TRES TONOS
@@ -33,7 +33,7 @@ grid on
 %%% Filtro FIR -> Ventana Hamming -> Orden: 60
 
 tiempo = linspace(0,N*Ts,N); %Eje de tiempo
-filtrada = filtrada'; %Al importar la columna con los datos de la señal filtrada, el vector lo llamo "filtrada"
+filtrada = filtradaRB'; %Al importar la columna con los datos de la señal filtrada, el vector lo llamo "filtrada"
 maximo_filtrada = max(filtrada);
 filtrada_normalizada = filtrada./maximo_filtrada;
 %%% REPRESENTACIÓN TEMPORAL DE LA SEÑAL FILTRADA -> FILTRO PASO ALTO
