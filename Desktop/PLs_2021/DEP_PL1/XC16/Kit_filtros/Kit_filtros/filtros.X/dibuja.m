@@ -28,7 +28,7 @@ ylabel('Ampitud [dB]');
 grid on
 
 
-%%% SEÑAL FILTRADA -> FILTRO PASO ALTO 
+%% SEÑAL FILTRADA -> FILTRO PASO ALTO 
 %%% fs = 10 kHz , %%% fc = 750 Hz
 %%% Filtro FIR -> Ventana Hamming -> Orden: 60
 

@@ -56,11 +56,11 @@ void generaonda(void)
 void filtrar (void)
 {
     /* Variables externas generadas con la toolbox FilterDesigner de MatLab */
-    extern FIRStruct pasoaltos1Filter;
+    extern FIRStruct pasobandaFilter;
 
-   	FIRDelayInit (&pasoaltos1Filter); //Inicializamos el Filtro
+   	FIRDelayInit (&pasobandaFilter); //Inicializamos el Filtro
 
-  	FIR (NUM_SAMPLES, &filtrada[0], &entrada[0], &pasoaltos1Filter); //Llamamos a la rutina de Filtro
+  	FIR (NUM_SAMPLES, &filtrada[0], &entrada[0], &pasobandaFilter); //Llamamos a la rutina de Filtro
     
    return;
 } 

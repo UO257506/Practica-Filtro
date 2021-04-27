@@ -4,10 +4,10 @@ Tool Name:
   c:\program files\microchip\xc16\v1.61\bin\bin\..\bin/elf-ld.exe
 
 Command:
-  -TC:\\Users\\evely\\AppData\\Local\\Temp\\tmp0000306c.00 \
-  -TC:\\Users\\evely\\AppData\\Local\\Temp\\tmp0000306c.01 \
-  -TC:\\Users\\evely\\AppData\\Local\\Temp\\tmp0000306c.02 \
-  -TC:\\Users\\evely\\AppData\\Local\\Temp\\tmp0000306c.03 \
+  -TC:\\Users\\evely\\AppData\\Local\\Temp\\tmp000023cc.00 \
+  -TC:\\Users\\evely\\AppData\\Local\\Temp\\tmp000023cc.01 \
+  -TC:\\Users\\evely\\AppData\\Local\\Temp\\tmp000023cc.02 \
+  -TC:\\Users\\evely\\AppData\\Local\\Temp\\tmp000023cc.03 \
   -p30F6014 \
   -o \
   dist/default/debug/filtros.X.debug.elf \
@@ -28,7 +28,7 @@ Command:
   -Lc:/program files/microchip/xc16/v1.61/bin/bin/../../support/dsPIC33F/gld \
   build/default/debug/Func.o \
   build/default/debug/Main.o \
-  build/default/debug/_ext/732407996/pasoaltos1.o \
+  build/default/debug/_ext/732407996/pasobanda.o \
   C:\Program Files\Microchip\xc16\v1.61\lib\libdsp-elf.a \
   --defsym=__MPLAB_BUILD=1 \
   --defsym=__MPLAB_DEBUG=1 \
@@ -141,7 +141,7 @@ section                    address   length (PC units)   length (bytes) (dec)
 .text                        0x100               0x622           0x933  (2355)
 .text                        0x722               0x136           0x1d1  (465)
 .text                        0x858                 0xa             0xf  (15)
-.pasoaltos1const             0x880                0x80            0xc0  (192)
+.pasobandaconst              0x880                0x80            0xc0  (192)
 .dinit                       0x900                0x2a            0x3f  (63)
 
                  Total "program" memory used (bytes):          0xc12  (3090) 2%
@@ -186,7 +186,7 @@ External Symbols in Data Memory (by address):
                     0x0c5a                  _sinA
                     0x105a                  _sinB
                     0x145a                  _sinC
-                    0x2780                  _pasoaltos1Filter
+                    0x2780                  _pasobandaFilter
 
 External Symbols in Data Memory (by name):
 
@@ -196,7 +196,7 @@ External Symbols in Data Memory (by name):
                     0x0854                  _frecb
                     0x0856                  _frecc
                     0x0850                  _fsample
-                    0x2780                  _pasoaltos1Filter
+                    0x2780                  _pasobandaFilter
                     0x0c5a                  _sinA
                     0x105a                  _sinB
                     0x145a                  _sinC
@@ -324,7 +324,7 @@ reserve_data_0x824
  *fill*             0x0824         0x2c00
 LOAD build/default/debug/Func.o
 LOAD build/default/debug/Main.o
-LOAD build/default/debug/_ext/732407996/pasoaltos1.o
+LOAD build/default/debug/_ext/732407996/pasobanda.o
 LOAD C:\Program Files\Microchip\xc16\v1.61\lib\libdsp-elf.a
                     0x0001                  __MPLAB_BUILD = 0x1
                     0x0001                  __MPLAB_DEBUG = 0x1
@@ -468,7 +468,7 @@ __RESERVED2
 
 __FGS             0xf8000a          0x2
  *(__FGS.sec*)
- __FGS.sec        0xf8000a          0x2 /CW/_FGSÀÝ
+ __FGS.sec        0xf8000a          0x2 /CW/_FGS`}
                   0xf8000a                  __FGS.sec
 
 __FICD
@@ -498,16 +498,16 @@ userdata
  *(.debug_line)
  .debug_line      0x000000        0x147 build/default/debug/Func.o
  .debug_line      0x000147         0x37 build/default/debug/Main.o
- .debug_line      0x00017e         0x1a build/default/debug/_ext/732407996/pasoaltos1.o
+ .debug_line      0x00017e         0x1a build/default/debug/_ext/732407996/pasobanda.o
 
 .debug_frame      0x000000         0x98
  *(.debug_frame)
  .debug_frame     0x000000         0x6a build/default/debug/Func.o
  .debug_frame     0x00006a         0x2e build/default/debug/Main.o
 
-.debug_str        0x000000         0x1a
+.debug_str        0x000000         0x19
  *(.debug_str)
- .debug_str       0x000000         0x1a build/default/debug/Func.o
+ .debug_str       0x000000         0x19 build/default/debug/Func.o
 
 .debug_loc
  *(.debug_loc)
@@ -1536,7 +1536,7 @@ LOAD c:/program files/microchip/xc16/v1.61/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files/microchip/xc16/v1.61/bin/bin/../../lib\liblega-c-elf.a
 END GROUP
 OUTPUT(dist/default/debug/filtros.X.debug.elf elf32-pic30)
-LOAD /CW/_FGSÀÝ
+LOAD /CW/_FGS`}
 LOAD default_isr
 LOAD data_init
 
@@ -1606,7 +1606,7 @@ __c30_signature
                     0x0858                  _errno
 
 .ybss               0x2700         0x80
- .ybss              0x2700         0x80 build/default/debug/_ext/732407996/pasoaltos1.o
+ .ybss              0x2700         0x80 build/default/debug/_ext/732407996/pasobanda.o
 
 .bss                0x085a       0x1000
  .bss               0x085a       0x1000 build/default/debug/Func.o
@@ -1617,8 +1617,8 @@ __c30_signature
                     0x145a                  _sinC
 
 .data               0x2780          0xe
- .data              0x2780          0xe build/default/debug/_ext/732407996/pasoaltos1.o
-                    0x2780                  _pasoaltos1Filter
+ .data              0x2780          0xe build/default/debug/_ext/732407996/pasobanda.o
+                    0x2780                  _pasobandaFilter
 
 .config_ICS       0xf8000c          0x2
  .config_ICS      0xf8000c          0x2 build/default/debug/Main.o
@@ -1640,10 +1640,10 @@ __c30_signature
                   0x000734                  _generaonda
                   0x000844                  _filtrar
 
-.pasoaltos1const
+.pasobandaconst
                   0x000880         0x80
- .pasoaltos1const
-                  0x000880         0x80 build/default/debug/_ext/732407996/pasoaltos1.o
+ .pasobandaconst
+                  0x000880         0x80 build/default/debug/_ext/732407996/pasobanda.o
 
 .dinit            0x000900         0x2a
  .dinit           0x000900         0x2a data_init

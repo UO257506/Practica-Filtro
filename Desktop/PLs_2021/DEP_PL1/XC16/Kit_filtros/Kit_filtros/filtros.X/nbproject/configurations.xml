@@ -18,7 +18,7 @@
                    projectFiles="true">
       <itemPath>Func.c</itemPath>
       <itemPath>Main.c</itemPath>
-      <itemPath>C:/Users/evely/Desktop/PLs_2021/DEP_PL1/XC16/Kit_filtros/Kit_filtros/filtros.X/pasoaltos1.s</itemPath>
+      <itemPath>C:/Users/evely/Desktop/PLs_2021/DEP_PL1/XC16/Kit_filtros/Kit_filtros/filtros.X/pasobanda.s</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -194,6 +194,9 @@
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
       </C30Global>
+      <PICkit3PlatformTool>
+        <property key="firmware.download.all" value="false"/>
+      </PICkit3PlatformTool>
     </conf>
   </confs>
 </configurationDescriptor>
